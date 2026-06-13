@@ -530,6 +530,11 @@
     return `<div class="player-top"><a class="back" href="#/jouer" data-act="quit-game" style="margin:0"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Quitter</a>${combo}${boost}${surv}${timer}${counter}${bar}</div>`;
   }
 
+  // Rappel de cours associé à une question (développe l'explication, ancre la notion).
+  function cap(s, n){ s = String(s||""); return s.length > n ? s.slice(0, n-1).replace(/\s+\S*$/, "") + "…" : s; }
+  function courseNote(id){ const c = CONTENT[id] || {}; if (c.coeur) return c.coeur; if (c.cours && c.cours.length) return c.cours.join(" "); return ""; }
+  function rappelHTML(it, max){ const n = courseNote(it.c.id); if (!n) return ""; const titre = (it.c.titre || it.c.title || ""); return `<span class="rappel">📖 <b>${esc(titre)}</b> — ${esc(cap(n, max || 260))}</span>`; }
+
   function renderQCM(it){
     const q = it.d; const ans = g.answered;
     const opts = q.o.map((opt,idx)=>{ let cls="opt";
@@ -537,7 +542,7 @@
       else if (g.exam && g.picked===idx) cls+=" picked";
       return `<button class="${cls}" data-act="pick" data-i="${idx}" ${ans&&!g.exam?"disabled":""}><span class="opt-k">${String.fromCharCode(65+idx)}</span><span>${esc(opt)}</span></button>`; }).join("");
     const fbMsg = g.picked===q.c ? "Bonne réponse !" : (g.survie ? "Raté — fin de la partie." : "Pas tout à fait.");
-    const feedback = (ans && !g.exam) ? `<div class="feedback ${g.picked===q.c?"ok":"no"}">${fbMsg} <span>${esc(q.e)}</span></div>` : "";
+    const feedback = (ans && !g.exam) ? `<div class="feedback ${g.picked===q.c?"ok":"no"}">${fbMsg} <span>${esc(q.e)}</span>${rappelHTML(it)}</div>` : "";
     let actions = "";
     if (ans && !g.exam){ if (g.sprint) actions=""; else if (g.survie && g.dead) actions=`<button class="btn" data-act="survie-end">Voir mon score</button>`; else actions=`<button class="btn" data-act="next-q">Suivant</button>`; }
     return `<div class="q-card"><div class="q-chap">${esc(it.c.titre)}</div><div class="q-text">${esc(q.q)}</div><div class="opts">${opts}</div>${feedback}<div class="q-actions">${actions}</div></div>`;
@@ -548,7 +553,7 @@
       if (ans && !g.exam){ if(val===q.a) c+=" good"; else if(g.picked===val) c+=" bad"; }
       else if (g.exam && g.picked===val) c+=" picked";
       return `<button class="${c}" data-act="answer-vf" data-v="${val}" ${ans&&!g.exam?"disabled":""}>${label}</button>`; };
-    const feedback = (ans && !g.exam) ? `<div class="feedback ${g.picked===q.a?"ok":"no"}">${g.picked===q.a?"Exact !":"Eh non."} <span>${esc(q.e)}</span></div>` : "";
+    const feedback = (ans && !g.exam) ? `<div class="feedback ${g.picked===q.a?"ok":"no"}">${g.picked===q.a?"Exact !":"Eh non."} <span>${esc(q.e)}</span>${rappelHTML(it)}</div>` : "";
     const nextBtn = (ans && !g.exam) ? `<button class="btn" data-act="next-q">Suivant</button>` : "";
     return `<div class="q-card"><div class="q-chap">${esc(it.c.titre)}</div><div class="q-text">${esc(q.s)}</div><div class="vf-row">${btn(true,"Vrai","yes")}${btn(false,"Faux","no")}</div>${feedback}<div class="q-actions">${nextBtn}</div></div>`;
   }
@@ -556,7 +561,7 @@
     const q = it.d; const ans = g.answered;
     const parts = q.t.split("_____");
     const filled = ans ? `<span class="trou-ans ${g.picked?"good":"bad"}">${esc(q.a)}</span>` : `<input class="trou-input" id="trou-input" type="text" autocomplete="off" spellcheck="false" placeholder="…">`;
-    const feedback = ans ? `<div class="feedback ${g.picked?"ok":"no"}">${g.picked?"Correct !":`Réponse : ${esc(q.a)}.`} <span>${esc(q.e||"")}</span></div>` : "";
+    const feedback = ans ? `<div class="feedback ${g.picked?"ok":"no"}">${g.picked?"Correct !":`Réponse : ${esc(q.a)}.`} <span>${esc(q.e||"")}</span>${rappelHTML(it)}</div>` : "";
     const actions = ans ? `<button class="btn" data-act="next-q">Suivant</button>` : `<button class="btn" data-act="submit-trou">Valider</button>`;
     return `<div class="q-card"><div class="q-chap">${esc(it.c.titre)}</div><div class="q-text trou">${esc(parts[0])}${filled}${esc(parts[1]||"")}</div>${feedback}<div class="q-actions">${actions}</div></div>`;
   }
@@ -607,14 +612,14 @@
     else if (kind==="vf"){ q=d.s; your=(g.picked===true?"Vrai":g.picked===false?"Faux":"—"); corr=d.a?"Vrai":"Faux"; }
     else if (kind==="trous"){ q=d.t.replace("_____","……"); your=g._trouVal||(ok?d.a:"—"); corr=d.a; }
     else return;
-    g.answers.push({ chap:reviewLabel(it), kind:kind, q:q, your:your, corr:corr, ok:ok, e:d.e||"" });
+    g.answers.push({ chap:reviewLabel(it), kind:kind, q:q, your:your, corr:corr, ok:ok, e:d.e||"", note:courseNote(it.c.id) });
   }
   function cqHTML(a){
     let ans;
     if (a.kind==="recall") ans = `<span class="cq-good">Réponse : ${esc(a.corr)}</span>`;
     else if (a.ok) ans = `<span class="cq-good">Bonne réponse : ${esc(a.corr)}</span>`;
     else ans = `<span class="cq-bad">Ta réponse : ${esc(a.your||"—")}</span><span class="cq-good">Bonne réponse : ${esc(a.corr)}</span>`;
-    return `<div class="cq ${a.ok?"":"no"}"><div class="cq-q"><span class="mk">${a.ok?"✓":"✗"}</span><span>${esc(a.q)}</span></div><div class="cq-ans">${ans}</div>${a.e?`<div class="cq-exp">${esc(a.e)}</div>`:""}${a.chap?`<div class="cq-chap">📘 ${esc(a.chap)}</div>`:""}</div>`;
+    return `<div class="cq ${a.ok?"":"no"}"><div class="cq-q"><span class="mk">${a.ok?"✓":"✗"}</span><span>${esc(a.q)}</span></div><div class="cq-ans">${ans}</div>${a.e?`<div class="cq-exp">${esc(a.e)}</div>`:""}${a.note?`<div class="cq-note">📖 Rappel de cours — ${esc(a.note)}</div>`:""}${a.chap?`<div class="cq-chap">📘 ${esc(a.chap)}</div>`:""}</div>`;
   }
 
   function renderResult(){
@@ -681,7 +686,7 @@
   }
   function recallRate(know){
     const it=g.items[g.i];
-    g.answers.push({ chap:reviewLabel(it), kind:"recall", q:it.d.q, your:"", corr:it.d.a, ok:know, e:"" });
+    g.answers.push({ chap:reviewLabel(it), kind:"recall", q:it.d.q, your:"", corr:it.d.a, ok:know, e:"", note:courseNote(it.c.id) });
     if (know){ g.correct++; addXp(10); gainCoins(5); sfx("correct"); creditObjective(it.c.id, it.c.id+"|recall|"+(it.d.q||"")); }
     else { g.wrong++; sfx("wrong"); }
     touchStreak(); const nb=checkBadges(); save(); announceBadges(nb); advance();
