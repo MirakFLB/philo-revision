@@ -3,7 +3,9 @@
 App de révision gamifiée pour l'épreuve écrite de **philosophie** (Bac 2026, tronc commun).
 Statique (HTML/CSS/JS, pas de build), fonctionne **hors-ligne**. Calquée sur l'app SES.
 
-**Lancer** : double-cliquer `Lancer Philo.bat` (ou ouvrir `index.html`).
+**En ligne (à partager)** : **https://mirakflb.github.io/philo-revision/** — pas de login, ouvre et joue. La progression (XP, écus, badges, maîtrise) est stockée localement dans le navigateur de chacun (`localStorage`), Mac comme Windows. Installable comme une appli (« Ajouter à l'écran d'accueil » / installer).
+
+**Lancer en local** : double-cliquer `Lancer Philo.bat` (ou ouvrir `index.html`).
 
 ## Ce qu'il y a dedans
 - **17 notions** groupées en 3 tiers de priorité (Tier 1 = 5 notions prioritaires, Tier 2 = 2, Tier 3 = 10 fiches express).
