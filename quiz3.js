@@ -12,9 +12,9 @@
 
   add("devoir", {
     qcm: [
-      { q: "Le possessif dans « faire SON devoir » fait problème car :", o: ["le devoir est collectif", "il suggère que chacun aurait son propre devoir (relativisme)", "c'est une faute de grammaire", "le devoir n'existe pas"], c: 1, e: "« Son » devoir interroge : morale universelle, ou autant de devoirs que d'individus ?" },
-      { q: "La « banalité du mal » (Arendt) désigne :", o: ["un mal spectaculaire", "le mal commis sans pensée, par obéissance, par des gens ordinaires", "un mal nécessaire", "l'absence de mal"], c: 1, e: "Eichmann : le mal naît de l'absence de jugement." },
-      { q: "Une loi peut être légale sans être :", o: ["écrite", "légitime (juste)", "appliquée", "votée"], c: 1, e: "Légal = conforme à la loi ; légitime = conforme au juste." }
+      { q: "Le possessif dans « faire SON devoir » fait problème car :", o: ["il rappelle que le devoir est toujours imposé par la collectivité", "il suggère que chacun aurait son propre devoir (relativisme)", "il constitue une faute de grammaire que la morale doit corriger", "il prouve que le devoir n'a aucune réalité hors du langage"], c: 1, e: "« Son » devoir interroge : morale universelle, ou autant de devoirs que d'individus ?" },
+      { q: "La « banalité du mal » (Arendt) désigne :", o: ["un mal spectaculaire commis par des monstres exceptionnellement cruels", "le mal commis sans pensée, par obéissance, par des gens ordinaires", "un mal jugé nécessaire au bon fonctionnement de toute société", "l'absence de mal réel derrière les apparences de la cruauté"], c: 1, e: "Eichmann : le mal naît de l'absence de jugement." },
+      { q: "Une loi peut être légale sans être :", o: ["rédigée et consignée dans un texte officiel quelconque", "légitime (juste)", "effectivement appliquée par les tribunaux du pays", "régulièrement votée par une assemblée délibérante"], c: 1, e: "Légal = conforme à la loi ; légitime = conforme au juste." }
     ],
     vf: [
       { s: "Agir par peur du gendarme, c'est agir par devoir (Kant).", a: false, e: "C'est agir conformément au devoir (par intérêt), non par devoir." },
@@ -27,8 +27,8 @@
 
   add("liberte", {
     qcm: [
-      { q: "Le Grand Inquisiteur (Dostoïevski) suggère que les hommes :", o: ["veulent la liberté avant tout", "préfèrent souvent la sécurité à la liberté", "sont naturellement libres", "n'ont pas d'âme"], c: 1, e: "La liberté angoisse ; beaucoup y renoncent contre pain et sécurité." },
-      { q: "Rousseau distingue liberté naturelle, civile et :", o: ["absolue", "morale", "économique", "divine"], c: 1, e: "Liberté morale = obéir à la loi qu'on s'est prescrite." }
+      { q: "Le Grand Inquisiteur (Dostoïevski) suggère que les hommes :", o: ["réclament la liberté avant tout et refusent qu'on la leur ôte", "préfèrent souvent la sécurité à la liberté", "naissent pleinement libres et le restent quoi qu'il arrive", "sont dépourvus d'âme et donc incapables de tout choix"], c: 1, e: "La liberté angoisse ; beaucoup y renoncent contre pain et sécurité." },
+      { q: "Rousseau distingue liberté naturelle, civile et :", o: ["absolue, soustraite à toute règle et à toute contrainte", "morale", "économique, fondée sur la propriété des biens produits", "divine, accordée à l'homme par la grâce du créateur"], c: 1, e: "Liberté morale = obéir à la loi qu'on s'est prescrite." }
     ],
     vf: [
       { s: "Pour Spinoza, l'homme libre est celui qui ignore ses déterminismes.", a: false, e: "Au contraire : les connaître est le début de la liberté." },
@@ -41,8 +41,8 @@
 
   add("bonheur", {
     qcm: [
-      { q: "Le mythe de Poros et Pénia (Platon) montre que le désir est :", o: ["pure plénitude", "à la fois manque et ressource (vivifiant)", "toujours mauvais", "inexistant"], c: 1, e: "Éros, fils de Ressource et de Pauvreté : manque ET élan." },
-      { q: "L'« happycratie » critique :", o: ["le bonheur authentique", "l'injonction sociale au bonheur permanent", "la tristesse", "la philosophie"], c: 1, e: "La tyrannie du « développement personnel » et du bonheur obligatoire." }
+      { q: "Le mythe de Poros et Pénia (Platon) montre que le désir est :", o: ["une pure plénitude qui comble l'âme sans laisser aucun manque", "à la fois manque et ressource (vivifiant)", "toujours mauvais et qu'il faut donc l'éteindre entièrement", "une pure illusion qui n'a aucune réalité dans l'âme humaine"], c: 1, e: "Éros, fils de Ressource et de Pauvreté : manque ET élan." },
+      { q: "L'« happycratie » critique :", o: ["le bonheur authentique que chacun construit par sa propre sagesse", "l'injonction sociale au bonheur permanent", "la tristesse vue comme un état toujours nuisible à éliminer", "la philosophie accusée de détourner les hommes du bonheur"], c: 1, e: "La tyrannie du « développement personnel » et du bonheur obligatoire." }
     ],
     vf: [
       { s: "Pour Pascal, le divertissement nous détourne de notre condition.", a: true, e: "Il masque l'angoisse et le « gouffre »." },
@@ -55,9 +55,9 @@
 
   add("justice", {
     qcm: [
-      { q: "L'exemple de l'enfant et la flûte (A. Sen) montre que :", o: ["la justice est simple", "plusieurs principes de justice rivalisent légitimement", "le plus fort a raison", "les enfants sont injustes"], c: 1, e: "Mérite, besoin, travail : des logiques de justice concurrentes." },
-      { q: "Antigone illustre le conflit entre :", o: ["deux lois positives", "loi non écrite (divine/naturelle) et loi de la cité", "l'amour et la haine", "le roi et le peuple"], c: 1, e: "Antigone oppose les lois non écrites au décret de Créon." },
-      { q: "La justice corrective (Aristote) concerne :", o: ["la répartition des honneurs", "les peines et réparations", "les échanges marchands", "le mérite"], c: 1, e: "Réparer un tort, punir." }
+      { q: "L'exemple de l'enfant et la flûte (A. Sen) montre que :", o: ["la justice est simple dès qu'on applique une seule règle claire", "plusieurs principes de justice rivalisent légitimement", "c'est toujours le plus fort qui finit par avoir entièrement raison", "les enfants sont par nature incapables d'agir avec justice"], c: 1, e: "Mérite, besoin, travail : des logiques de justice concurrentes." },
+      { q: "Antigone illustre le conflit entre :", o: ["deux lois positives également votées par la cité grecque", "loi non écrite (divine/naturelle) et loi de la cité", "l'amour fraternel et la haine que se vouent deux familles", "le roi tout-puissant et le peuple qui réclame ses droits"], c: 1, e: "Antigone oppose les lois non écrites au décret de Créon." },
+      { q: "La justice corrective (Aristote) concerne :", o: ["la répartition des honneurs et des charges entre les citoyens", "les peines et réparations", "les échanges marchands réglés par le seul jeu du marché", "le mérite individuel proportionné aux qualités de chacun"], c: 1, e: "Réparer un tort, punir." }
     ],
     vf: [
       { s: "« Vérité au-deçà des Pyrénées, erreur au-delà » (Pascal) illustre la relativité des justices humaines.", a: true, e: "Ce qui est juste varie selon les lieux." },
@@ -70,8 +70,8 @@
 
   add("langage", {
     qcm: [
-      { q: "La novlangue de 1984 (Orwell) montre que :", o: ["plus de mots = plus de liberté", "réduire le langage réduit la pensée possible", "la langue est neutre", "les mots n'ont aucun effet"], c: 1, e: "Appauvrir le vocabulaire rend la révolte impensable." },
-      { q: "Pour Merleau-Ponty, le dialogue est :", o: ["une lutte", "un terrain commun où se constitue un sens partagé", "inutile", "un monologue"], c: 1, e: "Le sens naît entre les interlocuteurs." }
+      { q: "La novlangue de 1984 (Orwell) montre que :", o: ["enrichir le vocabulaire suffit à garantir la liberté des esprits", "réduire le langage réduit la pensée possible", "la langue reste un outil parfaitement neutre vis-à-vis du pouvoir", "les mots employés n'ont aucun effet réel sur la façon de penser"], c: 1, e: "Appauvrir le vocabulaire rend la révolte impensable." },
+      { q: "Pour Merleau-Ponty, le dialogue est :", o: ["une lutte où chacun cherche à imposer son point de vue à l'autre", "un terrain commun où se constitue un sens partagé", "un échange inutile car les esprits restent toujours séparés", "un simple monologue que l'on tient à voix haute devant autrui"], c: 1, e: "Le sens naît entre les interlocuteurs." }
     ],
     vf: [
       { s: "Le lapsus (Freud) révèle un fond inconscient.", a: true, e: "L'acte manqué trahit un désir refoulé." },
@@ -84,8 +84,8 @@
 
   add("etat", {
     qcm: [
-      { q: "Pour Rousseau, la souveraineté appartient :", o: ["au roi", "au peuple via la volonté générale", "aux plus riches", "à Dieu"], c: 1, e: "Contrat social : le peuple est souverain." },
-      { q: "Le « monstre froid » (Nietzsche) reproche à l'État de :", o: ["protéger les faibles", "écraser les individualités et mentir", "être trop petit", "être démocratique"], c: 1, e: "« Moi, l'État, je suis le peuple » : il ment." }
+      { q: "Pour Rousseau, la souveraineté appartient :", o: ["au roi qui la reçoit en héritage et la transmet à ses fils", "au peuple via la volonté générale", "aux plus riches dont la fortune fonde le droit de gouverner", "à Dieu qui en délègue l'exercice aux princes de la terre"], c: 1, e: "Contrat social : le peuple est souverain." },
+      { q: "Le « monstre froid » (Nietzsche) reproche à l'État de :", o: ["protéger les faibles au détriment des forts et des créateurs", "écraser les individualités et mentir", "être trop petit pour assurer la grandeur d'un vrai peuple", "être démocratique et de livrer le pouvoir au grand nombre"], c: 1, e: "« Moi, l'État, je suis le peuple » : il ment." }
     ],
     vf: [
       { s: "Pour les anarchistes, l'ordre social exige nécessairement un État.", a: false, e: "« Ni Dieu ni maître » : l'ordre sans le pouvoir coercitif." }
@@ -97,8 +97,8 @@
 
   add("nature", {
     qcm: [
-      { q: "Le biomimétisme consiste à :", o: ["détruire la nature", "s'inspirer des solutions de la nature pour innover", "imiter les animaux pour jouer", "cultiver des plantes"], c: 1, e: "Dépassement nature/culture : la technique s'inspire du vivant." },
-      { q: "Pour Hobbes, l'état de nature est :", o: ["un paradis perdu", "une guerre, sans justice", "un fait historique daté", "l'âge d'or"], c: 1, e: "Sans loi : « guerre de tous contre tous »." }
+      { q: "Le biomimétisme consiste à :", o: ["détruire la nature afin de la remplacer par des machines plus fiables", "s'inspirer des solutions de la nature pour innover", "imiter les animaux pour s'amuser sans en tirer aucune technique", "cultiver des plantes selon les méthodes héritées de l'agriculture"], c: 1, e: "Dépassement nature/culture : la technique s'inspire du vivant." },
+      { q: "Pour Hobbes, l'état de nature est :", o: ["un paradis perdu où régnaient la paix et l'abondance", "une guerre, sans justice", "un fait historique daté que l'on peut situer précisément", "un âge d'or de concorde que la société aurait fait disparaître"], c: 1, e: "Sans loi : « guerre de tous contre tous »." }
     ],
     vf: [
       { s: "Pour Kant, la nature est l'ensemble des phénomènes soumis à des lois universelles.", a: true, e: "Nature = légalité des phénomènes." }
@@ -110,7 +110,7 @@
 
   add("conscience", {
     qcm: [
-      { q: "Le test du miroir évalue :", o: ["la vue", "la conscience de soi", "la mémoire", "le langage"], c: 1, e: "Se reconnaître dans le miroir = indice de conscience de soi." }
+      { q: "Le test du miroir évalue :", o: ["l'acuité de la vue et la capacité à distinguer les couleurs", "la conscience de soi", "la mémoire à long terme et le souvenir des visages connus", "la maîtrise du langage et la compréhension des signes"], c: 1, e: "Se reconnaître dans le miroir = indice de conscience de soi." }
     ],
     vf: [
       { s: "Pour Kant, « le je pense » doit pouvoir accompagner toutes mes représentations.", a: true, e: "Unité de l'aperception." }
@@ -122,7 +122,7 @@
 
   add("inconscient", {
     qcm: [
-      { q: "L'acte manqué, selon Freud, est :", o: ["un pur hasard", "l'expression déguisée d'un désir inconscient", "une maladie", "un mensonge volontaire"], c: 1, e: "Lapsus, oublis : le refoulé fait retour." }
+      { q: "L'acte manqué, selon Freud, est :", o: ["un pur hasard sans aucune signification cachée pour le sujet", "l'expression déguisée d'un désir inconscient", "une maladie nerveuse qu'il faut soigner par des médicaments", "un mensonge volontaire que le sujet adresse sciemment à autrui"], c: 1, e: "Lapsus, oublis : le refoulé fait retour." }
     ],
     vf: [
       { s: "Pour Alain, donner trop d'importance à l'inconscient est une faute morale.", a: true, e: "L'inconscient « grossi » déresponsabilise." }
@@ -134,7 +134,7 @@
 
   add("temps", {
     qcm: [
-      { q: "Proust et la madeleine illustrent :", o: ["le temps des horloges", "la mémoire involontaire qui ressuscite le passé", "l'éternel retour", "l'ennui"], c: 1, e: "Le temps retrouvé par la sensation." }
+      { q: "Proust et la madeleine illustrent :", o: ["le temps des horloges que l'on mesure objectivement en heures", "la mémoire involontaire qui ressuscite le passé", "l'éternel retour de toutes choses tel que Nietzsche le conçoit", "l'ennui qui naît de la répétition monotone des journées vécues"], c: 1, e: "Le temps retrouvé par la sensation." }
     ],
     vf: [
       { s: "Pour Bergson, mesurer le temps c'est déjà le spatialiser (le trahir).", a: true, e: "La durée vécue échappe à la mesure." }
@@ -146,7 +146,7 @@
 
   add("art", {
     qcm: [
-      { q: "La Fontaine de Duchamp (un urinoir) pose la question :", o: ["de la beauté classique", "de ce qui fait qu'une chose devient œuvre d'art", "de l'utilité", "de la technique"], c: 1, e: "Le geste et le contexte, plus que l'objet, font l'art." }
+      { q: "La Fontaine de Duchamp (un urinoir) pose la question :", o: ["de la beauté classique fondée sur les proportions et l'harmonie", "de ce qui fait qu'une chose devient œuvre d'art", "de l'utilité réelle d'un objet manufacturé dans la vie quotidienne", "de la technique et du savoir-faire manuel exigé de l'artisan"], c: 1, e: "Le geste et le contexte, plus que l'objet, font l'art." }
     ],
     vf: [
       { s: "Pour Hegel, l'art exprime sensiblement l'Idée (l'esprit).", a: true, e: "Le beau artistique dépasse le beau naturel." }
@@ -158,7 +158,7 @@
 
   add("travail", {
     qcm: [
-      { q: "Les Temps modernes (Chaplin) critique :", o: ["le chômage", "la déshumanisation du travail à la chaîne", "les patrons trop gentils", "le repos dominical"], c: 1, e: "Le taylorisme réduit l'ouvrier à un rouage." }
+      { q: "Les Temps modernes (Chaplin) critique :", o: ["le chômage de masse qui prive les ouvriers de tout revenu", "la déshumanisation du travail à la chaîne", "des patrons trop bienveillants qui ruinent leurs propres usines", "le repos dominical imposé qui interromprait la production"], c: 1, e: "Le taylorisme réduit l'ouvrier à un rouage." }
     ],
     vf: [
       { s: "Pour Rousseau, l'oisiveté serait la première inclination de l'homme.", a: true, e: "« Ne rien faire = la première passion de l'homme »." }
@@ -170,7 +170,7 @@
 
   add("technique", {
     qcm: [
-      { q: "Le mythe de Prométhée illustre :", o: ["le rejet de la technique", "la technique (le feu volé) qui élève et menace l'homme", "l'agriculture", "la guerre"], c: 1, e: "La technè comme puissance ambivalente." }
+      { q: "Le mythe de Prométhée illustre :", o: ["le rejet de la technique au profit d'un retour à l'état de nature", "la technique (le feu volé) qui élève et menace l'homme", "l'invention de l'agriculture qui fixe les hommes sur la terre", "la guerre entre les hommes que les dieux auraient déclenchée"], c: 1, e: "La technè comme puissance ambivalente." }
     ],
     vf: [
       { s: "Pour Heidegger, « la science ne pense pas ».", a: true, e: "Elle calcule mais n'interroge pas l'être." }
@@ -182,7 +182,7 @@
 
   add("religion", {
     qcm: [
-      { q: "Le pari de Pascal soutient qu'il est rationnel de :", o: ["nier Dieu", "parier sur l'existence de Dieu (gain infini)", "ignorer la question", "prouver Dieu mathématiquement"], c: 1, e: "Calcul des enjeux : tout à gagner à croire." }
+      { q: "Le pari de Pascal soutient qu'il est rationnel de :", o: ["nier Dieu puisque rien ne prouve solidement son existence", "parier sur l'existence de Dieu (gain infini)", "ignorer la question car elle dépasse les forces de la raison", "prouver Dieu mathématiquement par une démonstration certaine"], c: 1, e: "Calcul des enjeux : tout à gagner à croire." }
     ],
     vf: [
       { s: "Pour Feuerbach, c'est l'homme qui crée Dieu à son image (projection).", a: true, e: "Théologie = anthropologie inversée." }
@@ -194,7 +194,7 @@
 
   add("science", {
     qcm: [
-      { q: "Galilée face à l'Inquisition illustre :", o: ["l'accord science/religion", "le conflit entre vérité scientifique et autorité", "la fin de la science", "l'inutilité de l'observation"], c: 1, e: "« Et pourtant elle tourne » : la science contre le dogme." }
+      { q: "Galilée face à l'Inquisition illustre :", o: ["l'accord harmonieux entre la science et la religion de son temps", "le conflit entre vérité scientifique et autorité", "la fin définitive de toute recherche scientifique en Europe", "l'inutilité de l'observation face aux vérités déjà révélées"], c: 1, e: "« Et pourtant elle tourne » : la science contre le dogme." }
     ],
     vf: [
       { s: "Pour Claude Bernard, l'hypothèse doit être soumise à l'expérience.", a: true, e: "Observation → hypothèse → expérience → vérification." }
@@ -206,7 +206,7 @@
 
   add("verite", {
     qcm: [
-      { q: "Pour Descartes, le critère du vrai est :", o: ["l'utilité", "l'évidence (l'idée claire et distincte)", "le vote", "la tradition"], c: 1, e: "Ce qui se présente clairement et distinctement à l'esprit." }
+      { q: "Pour Descartes, le critère du vrai est :", o: ["l'utilité pratique que l'idée procure dans la conduite de la vie", "l'évidence (l'idée claire et distincte)", "le vote de la majorité qui s'accorde sur une même opinion", "la tradition reçue des Anciens et transmise par les autorités"], c: 1, e: "Ce qui se présente clairement et distinctement à l'esprit." }
     ],
     vf: [
       { s: "Les « faits alternatifs » illustrent le danger du relativisme sur la vérité.", a: true, e: "Confondre vérité et opinion/intérêt." }
@@ -218,7 +218,7 @@
 
   add("raison", {
     qcm: [
-      { q: "« Le sommeil de la raison engendre des monstres » (Goya) avertit que :", o: ["il faut dormir", "l'absence de raison libère les pires égarements", "la raison est dangereuse", "les rêves disent vrai"], c: 1, e: "Sans raison critique : superstition, fanatisme." }
+      { q: "« Le sommeil de la raison engendre des monstres » (Goya) avertit que :", o: ["il faut dormir suffisamment pour que la raison reste lucide", "l'absence de raison libère les pires égarements", "la raison est dangereuse et qu'il vaut mieux la laisser de côté", "les rêves disent vrai et révèlent l'avenir mieux que la raison"], c: 1, e: "Sans raison critique : superstition, fanatisme." }
     ],
     vf: [
       { s: "Pour Pascal, le cœur connaît des premiers principes que la raison ne démontre pas.", a: true, e: "« Le cœur a ses raisons… »." }
