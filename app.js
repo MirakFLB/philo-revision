@@ -305,7 +305,10 @@
 
     if (chapTab === "coeur"){
       const sujets = (c.sujets||[]).map(s=>`<span class="sujet-chip">${esc(s)}</span>`).join("");
-      body = `<div class="cours-block"><h3 class="sub3">Le cœur <span class="aide-tag">idée + problème</span></h3>
+      const resume = (ct.resume||[]).map(s=>`<li>${esc(s)}</li>`).join("");
+      body = `<div class="cours-block">
+        ${resume?`<h3 class="sub3">Cours résumé <span class="aide-tag">l'essentiel à retenir</span></h3><ul class="resume-list">${resume}</ul>`:""}
+        <h3 class="sub3" style="margin-top:${resume?"26px":"6px"}">Le cœur <span class="aide-tag">idée + problème</span></h3>
         <p class="coeur-text">${esc(ct.coeur||"—")}</p>
         <h3 class="sub3" style="margin-top:24px">Sujets de cours</h3><div class="sujet-chips">${sujets||"<span class='muted'>—</span>"}</div></div>`;
 
