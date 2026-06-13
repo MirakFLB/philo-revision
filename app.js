@@ -313,17 +313,22 @@
     const c = notionById[id]; if (!c) return renderDashboard();
     const p = partOf[id]; const cp = notionProgress(c); const ct = CONTENT[id] || {};
     const idx = orderedNotions.indexOf(c); const prev = orderedNotions[idx-1], next = orderedNotions[idx+1];
-    const tabs = [["coeur","Le cœur"],["distinctions","Distinctions"],["couleur","Tri couleur → plan"],["parcoeur","Par cœur"],["objectifs","Objectifs"]];
+    const tabs = [["coeur","L'essentiel"],["cours","Cours"],["distinctions","Distinctions"],["couleur","Tri couleur → plan"],["parcoeur","Par cœur"],["objectifs","Objectifs"]];
     const tabBtns = tabs.map(t => `<button class="tab ${chapTab===t[0]?"on":""}" data-act="tab" data-tab="${t[0]}">${t[1]}</button>`).join("");
     let body = "";
 
     if (chapTab === "coeur"){
       const sujets = (c.sujets||[]).map(s=>`<span class="sujet-chip">${esc(s)}</span>`).join("");
-      const lecon = lessonHTML(ct.lecon);
       body = `<div class="cours-block">
-        ${ct.lecon&&ct.lecon.intro?`<p class="coeur-text" style="margin-bottom:22px">${esc(ct.lecon.intro)}</p>`:(ct.coeur?`<p class="coeur-text" style="margin-bottom:22px">${esc(ct.coeur)}</p>`:"")}
-        ${lecon||`<p class="muted">Cours à venir.</p>`}
-        <h3 class="sub3" style="margin-top:26px">Sujets de cours</h3><div class="sujet-chips">${sujets||"<span class='muted'>—</span>"}</div></div>`;
+        <h3 class="sub3">L'essentiel <span class="aide-tag">idée + problème</span></h3>
+        <p class="coeur-text">${esc(ct.coeur||"—")}</p>
+        <h3 class="sub3" style="margin-top:24px">Sujets de cours</h3><div class="sujet-chips">${sujets||"<span class='muted'>—</span>"}</div>
+        ${ct.lecon?`<div class="toolbar" style="margin-top:24px"><button class="btn" data-act="tab" data-tab="cours"><svg viewBox="0 0 24 24" width="17" height="17"><path d="M6 3h9l5 5v13H6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 3v5h5" fill="none" stroke="currentColor" stroke-width="1.7"/></svg> Lire le cours complet</button></div>`:""}</div>`;
+    } else if (chapTab === "cours"){
+      const lecon = lessonHTML(ct.lecon);
+      body = `<div class="cours-block lecon-wrap">
+        ${ct.lecon&&ct.lecon.intro?`<p class="coeur-text" style="margin-bottom:24px">${esc(ct.lecon.intro)}</p>`:""}
+        ${lecon||`<p class="muted">Cours à venir.</p>`}</div>`;
 
     } else if (chapTab === "distinctions"){
       const dist = (ct.distinctions||[]).map(s=>`<li>${esc(s)}</li>`).join("");
