@@ -24,7 +24,7 @@
 
   /* ---------- store ---------- */
   const KEY = "philo2026.v1";
-  const PROG_VERSION = 1; // bump pour réinitialiser la progression des notions (garde écus/skins/XP)
+  const PROG_VERSION = 2; // bump pour réinitialiser la progression des notions (garde écus/skins/XP)
   let state = load();
   function load(){
     let r = {};
@@ -33,6 +33,7 @@
       done: new Set(r.done||[]),
       leitner: r.leitner||{},
       objxp: r.objxp||{},
+      ncorr: r.ncorr||{},
       seen: new Set(r.seen||[]),
       pv: r.pv||0,
       xp: r.xp||0,
@@ -50,10 +51,10 @@
       lastDaily: r.lastDaily||"",
       sound: r.sound!==undefined ? !!r.sound : true
     };
-    if (s.pv !== PROG_VERSION){ s.done = new Set(); s.objxp = {}; s.seen = new Set(); s.pv = PROG_VERSION; }
+    if (s.pv !== PROG_VERSION){ s.done = new Set(); s.objxp = {}; s.ncorr = {}; s.seen = new Set(); s.pv = PROG_VERSION; }
     return s;
   }
-  function save(){ try { localStorage.setItem(KEY, JSON.stringify({ done:[...state.done], leitner:state.leitner, objxp:state.objxp, xp:state.xp, badges:[...state.badges], streak:state.streak, best:state.best, stats:state.stats, daily:state.daily, prioOnly:state.prioOnly, coins:state.coins, owned:state.owned, equipped:state.equipped, powerups:state.powerups, boostActive:state.boostActive, lastDaily:state.lastDaily, sound:state.sound, seen:[...state.seen], pv:state.pv })); } catch(e){} }
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify({ done:[...state.done], leitner:state.leitner, objxp:state.objxp, ncorr:state.ncorr, xp:state.xp, badges:[...state.badges], streak:state.streak, best:state.best, stats:state.stats, daily:state.daily, prioOnly:state.prioOnly, coins:state.coins, owned:state.owned, equipped:state.equipped, powerups:state.powerups, boostActive:state.boostActive, lastDaily:state.lastDaily, sound:state.sound, seen:[...state.seen], pv:state.pv })); } catch(e){} }
 
   /* ---------- gamification ---------- */
   const DAILY_GOAL = 80;
@@ -178,21 +179,27 @@
   function coinPop(text){ const el=document.createElement("div"); el.className="coinpop"; el.textContent=text; document.body.appendChild(el); requestAnimationFrame(()=>el.classList.add("go")); setTimeout(()=>el.remove(),1100); }
   function confetti(){ try{ if(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return; }catch(e){} const box=document.createElement("div"); box.className="confetti"; const cols=["#e4b765","#46c98b","#5b9dff","#b08bff","#e7785a","#22d3ee"]; for(let i=0;i<40;i++){ const s=document.createElement("i"); const x=((Math.random()*2-1)*240).toFixed(0); const r=(Math.random()*720-360).toFixed(0); const d=(0.9+Math.random()*0.8).toFixed(2); s.style.cssText="--x:"+x+"px;--r:"+r+"deg;--d:"+d+"s;background:"+cols[i%cols.length]+";animation-delay:"+(Math.random()*0.12).toFixed(2)+"s"; box.appendChild(s); } document.body.appendChild(box); setTimeout(()=>box.remove(),2400); }
 
-  /* ---------- progress + ring ---------- */
-  const OBJ_K = 5; // bonnes réponses DIFFÉRENTES pour maîtriser un objectif en jouant
-  function objMastery(oid){ if(state.done.has(oid)) return 1; return Math.min((state.objxp[oid]||0)/OBJ_K, 1); }
-  function notionProgress(c){ const t=c.objectifs.length; let d=0, m=0; for(let i=0;i<t;i++){ const oid=c.id+"#o"+i; if(state.done.has(oid)) d++; m+=objMastery(oid); } return {d,t,m,pct:t?Math.round(m/t*100):0}; }
-  function partProgress(p){ let d=0,t=0,m=0; p.notions.forEach(c=>{const x=notionProgress(c);d+=x.d;t+=x.t;m+=x.m;}); return {d,t,pct:t?Math.round(m/t*100):0}; }
-  function overall(){ let d=0,t=0,m=0; orderedNotions.forEach(c=>{const x=notionProgress(c);d+=x.d;t+=x.t;m+=x.m;}); return {d,t,pct:t?Math.round(m/t*100):0}; }
+  /* ---------- progress + ring (maîtrise = couverture réelle de la banque) ----------
+     La maîtrise d'une notion = nb de réponses DISTINCTES correctes / cible.
+     cible = ~80% de toute la banque de la notion (QCM+V/F+trous+récit.+concepts).
+     → impossible de monter vite : il faut couvrir presque toutes les questions. */
+  const COVERAGE = 0.8;
+  function bankSize(c){ const Qd = QUIZ[c.id]||{}, Cd = CONTENT[c.id]||{}; return (Qd.qcm||[]).length + (Qd.vf||[]).length + (Qd.trous||[]).length + (Qd.recall||[]).length + (Cd.notions||[]).length; }
+  function notionTarget(c){ return Math.max(c.objectifs.length, Math.ceil(bankSize(c) * COVERAGE)); }
+  function notionCorrect(c){ return state.ncorr[c.id] || 0; }
+  function objThreshold(c, i){ const N = c.objectifs.length || 1; return Math.ceil(notionTarget(c) * (i+1) / N); }
+  function objDone(c, i){ return state.done.has(c.id+"#o"+i) || notionCorrect(c) >= objThreshold(c, i); }
+  function notionProgress(c){ const t = c.objectifs.length; let d = 0; for (let i=0;i<t;i++) if (objDone(c,i)) d++; const tg = notionTarget(c); return { d, t, cc: notionCorrect(c), tg, pct: tg ? Math.round(Math.min(1, notionCorrect(c)/tg) * 100) : 0 }; }
+  function partProgress(p){ let d=0,t=0,cc=0,tt=0; p.notions.forEach(c=>{const x=notionProgress(c); d+=x.d; t+=x.t; cc+=x.cc; tt+=x.tg;}); return { d, t, pct: tt ? Math.round(Math.min(1, cc/tt) * 100) : 0 }; }
+  function overall(){ let d=0,t=0,cc=0,tt=0; orderedNotions.forEach(c=>{const x=notionProgress(c); d+=x.d; t+=x.t; cc+=x.cc; tt+=x.tg;}); return { d, t, pct: tt ? Math.round(Math.min(1, cc/tt) * 100) : 0 }; }
   function creditObjective(notionId, sig){
     const c = notionById[notionId]; if(!c) return;
-    if (sig){ if (state.seen.has(sig)) return; state.seen.add(sig); } // anti-répétition : une question ne crédite qu'une fois
+    if (sig){ if (state.seen.has(sig)) return; state.seen.add(sig); } // une réponse distincte ne crédite qu'une fois
+    const before = notionCorrect(c), after = before + 1; state.ncorr[c.id] = after;
     for (let i=0;i<c.objectifs.length;i++){
-      const oid = notionId+"#o"+i;
-      if (state.done.has(oid)) continue;
-      state.objxp[oid] = (state.objxp[oid]||0)+1;
-      if (state.objxp[oid] >= OBJ_K){ state.done.add(oid); state.coins += 10; toast(`<span class="t-ico">✅</span> Objectif maîtrisé — +10 ${COIN}`); }
-      return;
+      const oid = c.id+"#o"+i; if (state.done.has(oid)) continue;
+      const thr = objThreshold(c, i);
+      if (after >= thr && before < thr){ state.done.add(oid); state.coins += 10; toast(`<span class="t-ico">✅</span> Objectif maîtrisé — +10 ${COIN}`); }
     }
   }
 
@@ -334,12 +341,14 @@
         <h3 class="sub3" style="margin-top:24px">Pièges à éviter</h3><ul class="piege-list">${piegs||"<li class='muted'>—</li>"}</ul>`;
 
     } else { // objectifs
-      const objs = c.objectifs.map((o,i)=>{ const oid=c.id+"#o"+i; const done=state.done.has(oid);
-        const cred = Math.min(state.objxp[oid]||0, OBJ_K);
-        const prog = done ? "" : `<div class="obj-prog"><div class="obj-prog-bar"><i style="width:${Math.round(cred/OBJ_K*100)}%"></i></div><span>${cred}/${OBJ_K} en jouant</span></div>`;
+      const cc=cp.cc, tg=cp.tg;
+      const objs = c.objectifs.map((o,i)=>{ const oid=c.id+"#o"+i; const done=objDone(c,i); const thr=objThreshold(c,i);
+        const prog = done ? "" : `<div class="obj-prog"><div class="obj-prog-bar"><i style="width:${Math.round(Math.min(1,cc/thr)*100)}%"></i></div><span>palier : ${thr} bonnes réponses distinctes</span></div>`;
         return `<li class="obj ${done?"done":""}" data-act="toggle-obj" data-id="${oid}"><span class="chk"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="body"><div class="otext">${esc(o)}</div>${prog}</div></li>`; }).join("");
       body = `<div class="obj-head" style="margin-top:6px"><h3 class="sub3">Objectifs de révision</h3><span class="official">${tierLabel(c.tier)}</span></div>
-        <p class="obj-sub">Coche un objectif, ou gagne sa maîtrise en jouant : <b>${OBJ_K} bonnes réponses différentes</b> de la notion valident un objectif. ${cp.d}/${cp.t} maîtrisés.</p><ul class="obj-list">${objs}</ul>`;
+        <p class="obj-sub">Maîtrise réelle : <b>${cc}/${tg}</b> bonnes réponses <b>distinctes</b> de la notion (${cp.pct}%). Atteindre 100% suppose de couvrir la quasi-totalité de la banque — répéter une question déjà réussie ne compte pas.</p>
+        <div class="obj-prog" style="margin:0 0 18px"><div class="obj-prog-bar" style="max-width:none"><i style="width:${cp.pct}%"></i></div><span>${cp.pct}%</span></div>
+        <ul class="obj-list">${objs}</ul>`;
     }
 
     const navLink = (ch,dir) => ch ? `<a class="${dir==="next"?"next":""}" href="#/chapitre/${ch.id}"><span class="dir">${dir==="next"?"Notion suivante":"Notion précédente"}</span><span class="lab">${esc(ch.titre)}</span></a>` : `<span class="empty"></span>`;
@@ -651,11 +660,8 @@
   }
   function objRate(acq){
     const it=g.items[g.i];
-    if (acq){
-      const sig=it.oid+"|acq";
-      if (!state.seen.has(sig)){ state.seen.add(sig); state.objxp[it.oid]=(state.objxp[it.oid]||0)+1; if(state.objxp[it.oid]>=OBJ_K){ state.done.add(it.oid); state.coins+=10; toast(`<span class="t-ico">✅</span> Objectif maîtrisé — +10 ${COIN}`); } }
-      g.correct++; addXp(10); gainCoins(5); sfx("correct");
-    } else { g.wrong++; sfx("wrong"); }
+    if (acq){ creditObjective(it.c.id, it.oid+"|acq"); g.correct++; addXp(10); gainCoins(5); sfx("correct"); }
+    else { g.wrong++; sfx("wrong"); }
     touchStreak(); const nb=checkBadges(); save(); announceBadges(nb); advance();
   }
   function matchLeft(nid){ g.sel=nid; g.wrongId=null; view.innerHTML=renderGame(); }
@@ -820,7 +826,7 @@
   function softRefreshNotion(id){
     const c=notionById[id]; if(!c) return; const cp=notionProgress(c);
     const rw=view.querySelector(".detail-top .ring.lg"); if(rw){ const t=document.createElement("div"); t.innerHTML=ring(cp.pct,132); rw.replaceWith(t.firstElementChild); }
-    const sub=view.querySelector(".obj-sub"); if(sub&&chapTab==="objectifs") sub.innerHTML=`Coche un objectif, ou gagne sa maîtrise en jouant : <b>${OBJ_K} bonnes réponses différentes</b> de la notion valident un objectif. ${cp.d}/${cp.t} maîtrisés.`;
+    const sub=view.querySelector(".obj-sub"); if(sub&&chapTab==="objectifs") sub.innerHTML=`Maîtrise réelle : <b>${cp.cc}/${cp.tg}</b> bonnes réponses <b>distinctes</b> de la notion (${cp.pct}%). Atteindre 100% suppose de couvrir la quasi-totalité de la banque — répéter une question déjà réussie ne compte pas.`;
   }
 
   /* ===================== SEARCH ===================== */
