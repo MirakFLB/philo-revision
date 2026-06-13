@@ -293,6 +293,18 @@
       ${blocks}</div>`;
   }
 
+  /* ---- rendu d'un cours structuré (I / A / points + à retenir) ---- */
+  function lessonHTML(lecon){
+    if (!lecon || !lecon.parties) return "";
+    const parts = lecon.parties.map(P=>{
+      const direct = (P.p||[]).length ? `<ul class="lec-points">${P.p.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>` : "";
+      const subs = (P.sub||[]).map(S=>`<div class="lec-sub"><h5 class="lec-h2">${esc(S.t)}</h5><ul class="lec-points">${(S.p||[]).map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`).join("");
+      return `<section class="lec-part"><h4 class="lec-h1">${esc(P.t)}</h4>${direct}${subs}</section>`;
+    }).join("");
+    const ret = (lecon.retenir||[]).map(x=>`<li>${esc(x)}</li>`).join("");
+    return `<div class="lecon">${parts}${ret?`<div class="lec-retenir"><div class="lec-retenir-h">📌 À retenir</div><ul>${ret}</ul></div>`:""}</div>`;
+  }
+
   /* ---- notion detail with tabs ---- */
   let chapTab = "coeur";
   function renderNotion(id){
@@ -305,12 +317,11 @@
 
     if (chapTab === "coeur"){
       const sujets = (c.sujets||[]).map(s=>`<span class="sujet-chip">${esc(s)}</span>`).join("");
-      const resume = (ct.resume||[]).map(s=>`<li>${esc(s)}</li>`).join("");
+      const lecon = lessonHTML(ct.lecon);
       body = `<div class="cours-block">
-        ${resume?`<h3 class="sub3">Cours résumé <span class="aide-tag">l'essentiel à retenir</span></h3><ul class="resume-list">${resume}</ul>`:""}
-        <h3 class="sub3" style="margin-top:${resume?"26px":"6px"}">Le cœur <span class="aide-tag">idée + problème</span></h3>
-        <p class="coeur-text">${esc(ct.coeur||"—")}</p>
-        <h3 class="sub3" style="margin-top:24px">Sujets de cours</h3><div class="sujet-chips">${sujets||"<span class='muted'>—</span>"}</div></div>`;
+        ${ct.lecon&&ct.lecon.intro?`<p class="coeur-text" style="margin-bottom:22px">${esc(ct.lecon.intro)}</p>`:(ct.coeur?`<p class="coeur-text" style="margin-bottom:22px">${esc(ct.coeur)}</p>`:"")}
+        ${lecon||`<p class="muted">Cours à venir.</p>`}
+        <h3 class="sub3" style="margin-top:26px">Sujets de cours</h3><div class="sujet-chips">${sujets||"<span class='muted'>—</span>"}</div></div>`;
 
     } else if (chapTab === "distinctions"){
       const dist = (ct.distinctions||[]).map(s=>`<li>${esc(s)}</li>`).join("");
